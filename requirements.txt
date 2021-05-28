@@ -1,0 +1,3 @@
+crowdstrike-falconpy==0.4.8
+deb-pkg-tools==8.4
+.
