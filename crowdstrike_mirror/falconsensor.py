@@ -1,6 +1,7 @@
 import json
 import os
 from hashlib import sha256
+from pathlib import Path
 
 from deb_pkg_tools.repo import update_repository
 from falconpy import api_complete as FalconSDK
@@ -54,8 +55,13 @@ def remove_old_packages(packages, dir=REPO):
             os.remove(f"{dir}/{file}")
 
 
+def update_tracefile(dir):
+    Path(f"{dir}/.trace").touch()
+
+
 def main():
     falcon = FalconSDK.APIHarness(creds=get_creds())
     remove_old_packages(download_new_packages(falcon))
     update_repository(REPO)
+    update_tracefile(REPO)
     falcon.deauthenticate()
